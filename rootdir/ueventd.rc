@@ -1,4 +1,5 @@
 # Copyright (c) 2012-2015, 2017-2020, The Linux Foundation. All rights reserved.
+# Copyright (C) 2018 Sony Mobile Communications Inc
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -24,6 +25,10 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# NOTE: This file has been modified by Sony Mobile Communications Inc.
+# Modifications are licensed under the Sony Mobile Communications Inc's
+# End User License Agreement ("EULA"). Any use of the modifications is subject
+# to the terms of the EULA
 
 # Firmware directory Path
 # Below macro will be read by uevent and path will
@@ -59,6 +64,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/ipa_adpl             0660   system     oem_2905
 /dev/synx_device          0660   root       camera
 /dev/hab                  0666   system     system
+/dev/iio:device*          0664   system     system
 
 #permissions for UFS RPMB BSG device node
 /dev/0:0:0:49476          0600   system     system
@@ -159,10 +165,6 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/adsprpc-smd-secure   0644   system     system
 /dev/system_health_monitor 0644  radio      system
 /dev/mdss_rotator         0664   system     system
-
-# liochen@BSP, 2016/12/13, Add fastboot oem lock/unlock command
-/dev/block/sda12          0600   system     system
-/dev/block/sda4           0660   root       system
 
 #QDSS
 /dev/byte-cntr            0660   system    oem_2902
@@ -311,9 +313,15 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/devices/virtual/net/bond0 queues/rx-0/rps_cpus 0660 system system
 
 #nfc permissions
-/dev/nfc-nci              0660    nfc         nfc
-/dev/nq-nci               0660    nfc         nfc
-/dev/assd                 0660    nfc         nfc
+#/dev/nfc-nci              0660    nfc         nfc
+#/dev/nq-nci               0660    nfc         nfc
+#/dev/assd                 0660    nfc         nfc
+
+# NFC
+/dev/pn553                 0660    nfc         nfc
+
+# eSE device
+/dev/p73                   0660   secure_element secure_element
 
 # UIO devices
 /dev/uio0                 0660   system     system
@@ -329,6 +337,12 @@ firmware_directories /vendor/firmware_mnt/image/
 # Ramdump devices
 /dev/ramdump*             0640   system     system
 
+# tzdbg
+/dev/tzdbg_*              0440   root       root
+
+# wlan crash reason
+/dev/wlan_pdr_*           0440   root       root
+
 # Fingerprint device
 /dev/qbt*                 0660   system     system
 /sys/class/fts/touch_aoi aoi_set 0660 root system
@@ -342,7 +356,6 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/block/platform/soc/7824900.sdhci/by-name/config    0600   system     system
 /dev/block/platform/soc/7464900.sdhci/by-name/frp       0600   system     system
 /dev/block/platform/soc/624000.ufshc/by-name/frp        0600   system     system
-/dev/block/platform/soc/1d84000.ufshc/by-name/config    0600   system     system
 /dev/block/platform/soc/1da4000.ufshc/by-name/frp       0600   system     system
 /dev/block/platform/soc/c0c4000.sdhci/by-name/frp       0600   system     system
 /dev/block/platform/soc/1d84000.ufshc/by-name/frp       0600   system     system
@@ -412,3 +425,65 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/class/graphics/fb0     modes                    0664    system  graphics
 /sys/class/graphics/fb0     mode                     0664    system  graphics
 /sys/class/graphics/fb0     msm_cmd_autorefresh_en   0664    system  graphics
+*/
+
+#asm330 sensor
+#common sensors files
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   buffer/enable                   0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   buffer/length                   0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   buffer/watermark                0664   system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   discharded_samples              0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   current_timestamp_clock         0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   hwfifo_flush                    0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   hwfifo_watermark                0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   hwfifo_watermark_max            0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   mount_matrix                    0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   name                            0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   sampling_frequency              0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   sampling_frequency_available    0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_timestamp_en   0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_timestamp_index 0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_timestamp_type 0664    system  system
+
+# standard iio accel attributes
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_accel_scale_available        0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_accel_x_raw                  0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_accel_x_scale                0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_accel_y_raw                  0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_accel_y_scale                0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_accel_z_raw                  0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_accel_z_scale                0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_accel_x_en     0664   system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_accel_x_index  0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_accel_x_type   0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_accel_y_en     0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_accel_y_index  0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_accel_y_type   0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_accel_z_en     0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_accel_z_index  0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_accel_z_type   0664    system  system
+
+# standard iio gyro attributes
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_anglvel_scale_available      0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_anglvel_x_raw                0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_anglvel_x_scale              0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_anglvel_y_raw                0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_anglvel_y_scale              0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_anglvel_z_raw                0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_anglvel_z_scale              0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_anglvel_x_en   0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_anglvel_x_index 0664   system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_anglvel_x_type  0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_anglvel_y_en    0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_anglvel_y_index 0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_anglvel_y_type  0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_anglvel_z_en    0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_anglvel_z_index 0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   scan_elements/in_anglvel_z_type  0664    system  system
+
+
+# standard iio temp attributes
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_temp_offset                  0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_temp_raw                     0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_temp_scale                   0664    system  system
+/sys/devices/platform/soc/*.i2c/i2c-*/*-*/iio:device*   in_temp_scale_available         0664    system  system

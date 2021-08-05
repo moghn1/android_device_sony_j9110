@@ -8,6 +8,10 @@
 
 set -e
 
+export DEVICE_COMMON=j9110
+export VENDOR=sony
+export DEVICE_BRINGUP_YEAR=2019
+
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "${MY_DIR}" ]]; then MY_DIR="${PWD}"; fi

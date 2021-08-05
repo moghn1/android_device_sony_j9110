@@ -1,5 +1,6 @@
 #!/vendor/bin/sh
 # Copyright (c) 2012-2018, 2020 The Linux Foundation. All rights reserved.
+# Copyright (C) 2018 Sony Mobile Communications Inc.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -26,6 +27,8 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# NOTE: This file has been modified by Sony Mobile Communications Inc.
+# Modifications are licensed under the License.
 #
 
 # Set platform variables
@@ -102,7 +105,9 @@ if [ "$(getprop persist.vendor.usb.config)" == "" -a "$(getprop ro.build.type)" 
 		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
 		      ;;
 	              "msmnile" | "sm6150" | "trinket" | "lito" | "atoll" | "bengal" | "lahaina" | "holi")
-			  setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,qdss,adb
+# JIML-117813 Disable persist.vendor.usb.config at Kumano-plus
+#			  setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,qdss,adb
+			  echo ""
 		      ;;
 	              *)
 		          setprop persist.vendor.usb.config diag,adb
@@ -140,10 +145,10 @@ esac
 # check configfs is mounted or not
 if [ -d /config/usb_gadget ]; then
 	# Chip-serial is used for unique MSM identification in Product string
-	msm_serial=`cat /sys/devices/soc0/serial_number`;
-	msm_serial_hex=`printf %08X $msm_serial`
-	machine_type=`cat /sys/devices/soc0/machine`
-	setprop vendor.usb.product_string "$machine_type-$soc_hwplatform _SN:$msm_serial_hex"
+	#msm_serial=`cat /sys/devices/soc0/serial_number`;
+	#msm_serial_hex=`printf %08X $msm_serial`
+	#machine_type=`cat /sys/devices/soc0/machine`
+	#setprop vendor.usb.product_string "$machine_type-$soc_hwplatform _SN:$msm_serial_hex"
 
 	# ADB requires valid iSerialNumber; if ro.serialno is missing, use dummy
 	serialnumber=`cat /config/usb_gadget/g1/strings/0x409/serialnumber 2> /dev/null`
@@ -169,18 +174,6 @@ case "$soc_id" in
 		setprop vendor.usb.rps_mask 40
 	;;
 esac
-
-#ifdef VENDOR_EDIT
-#@BSP, 20171114 Enable diag and adb for FTM
-boot_mode=`getprop ro.boot.ftm_mode`
-echo "boot_mode: $boot_mode" > /dev/kmsg
-case "$boot_mode" in
-    "ftm_at" | "ftm_rf" | "ftm_wlan" | "ftm_mos")
-    setprop sys.usb.config diag,adb
-    setprop persist.sys.usb.config diag,adb
-    echo "AFTER boot_mode: diag,adb" > /dev/kmsg
-esac
-#endif
 
 #
 # Initialize UVC conifguration.
