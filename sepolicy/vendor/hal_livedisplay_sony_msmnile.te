@@ -1,0 +1,13 @@
+# Allow hal_livedisplay_sony_msmnile to find qdisplay_service
+allow hal_livedisplay_sony_msmnile qdisplay_service:service_manager find;
+
+# Allow hal_livedisplay_sony_msmnile to call hal_sensors_default via binder
+binder_call(hal_livedisplay_sony_msmnile, hal_graphics_composer_default)
+
+# Allow hal_livedisplay_sony_msmnile to write to DisplayMode nodes
+allow hal_livedisplay_sony_msmnile sysfs_graphics:dir r_dir_perms;
+allow hal_livedisplay_sony_msmnile sysfs_livedisplay_tuneable:file rw_file_perms;
+
+# Allow hal_livedisplay_sony_msmnile to store files under /data/vendor/display and access them
+allow hal_livedisplay_sony_msmnile display_vendor_data_file:dir rw_dir_perms;
+allow hal_livedisplay_sony_msmnile display_vendor_data_file:file create_file_perms;

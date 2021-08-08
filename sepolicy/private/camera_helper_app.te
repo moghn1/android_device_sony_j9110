@@ -1,7 +1,3 @@
-type camera_helper_app, domain;
-
-app_domain(camera_helper_app)
-
 # Allow camera_helper_app to find app_api_service
 allow camera_helper_app app_api_service:service_manager find;
 
