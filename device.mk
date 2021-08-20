@@ -257,11 +257,8 @@ PRODUCT_PACKAGES += \
     fastbootd
 
 # Fingerprint
-#PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.1-service.oneplus_msmnile \
-    vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus_msmnile \
-    vendor.oneplus.fingerprint.extension@1.0.vendor \
-    vendor.oneplus.hardware.display@1.0.vendor
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.1-service.sony
 
 # GPS
 PRODUCT_COPY_FILES += \
@@ -381,8 +378,8 @@ PRODUCT_PACKAGES += \
     libstdc++.vendor
 
 # Vibrator
-#PRODUCT_PACKAGES += \
-    vendor.qti.hardware.vibrator.service.sony_msmnile
+PRODUCT_PACKAGES += \
+    vendor.qti.hardware.vibrator@1.2-service
 
 # Vibrator
 PRODUCT_PACKAGES += \
@@ -424,6 +421,10 @@ PRODUCT_PACKAGES += \
     qti-telephony-utils \
     qti_telephony_utils.xml \
     telephony-ext
+
+PRODUCT_PACKAGE += \
+    ModemConfig
+
 
 PRODUCT_BOOT_JARS += \
     telephony-ext
@@ -479,6 +480,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
+
+# MODEM-CONFIG
+MODEM_CONFIG := $(shell find $(LOCAL_PATH)/rootdir/vendor/modem-config -type f -printf '%p:$(TARGET_COPY_OUT_VENDOR)/oem/modem-config/%P\n')
+
+PRODUCT_COPY_FILES += $(MODEM_CONFIG)
 
 # WiFi
 PRODUCT_PACKAGES += \
