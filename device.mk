@@ -282,10 +282,10 @@ PRODUCT_PACKAGES += \
     libhwbinder \
     libhwbinder.vendor
 
-
 # Input
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl
+    $(LOCAL_PATH)/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
+    $(LOCAL_PATH)/keylayout/uinput-fpc.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-fpc.kl
 
 # IPACM
 PRODUCT_PACKAGES += \
@@ -381,6 +381,19 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.vibrator@1.2-service
 
+# Fingerprint
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.1-service.sony
+
+# Light
+PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-service.sony
+
+# Health
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.0-service.sony
+
+
 # Vibrator
 PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-impl \
@@ -408,10 +421,6 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     device/sony/j9110
 
-# Remove unwanted packages
-#PRODUCT_PACKAGES += \
-    RemovePackages
-
 # Telephony
 PRODUCT_PACKAGES += \
     ims-ext-common \
@@ -422,25 +431,11 @@ PRODUCT_PACKAGES += \
     qti_telephony_utils.xml \
     telephony-ext
 
-PRODUCT_PACKAGE += \
-    ModemConfig
-
-
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-qti.xml
-
-# Touch
-#PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.oneplus_msmnile
-
-# tri-state key
-#PRODUCT_PACKAGES += \
-    KeyHandler \
-    tri-state-key_daemon
-
 
 #usbdebug
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -480,9 +475,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
-
-# MODEM-CONFIG
-MODEM_CONFIG := $(shell find $(LOCAL_PATH)/rootdir/vendor/modem-config -type f -printf '%p:$(TARGET_COPY_OUT_VENDOR)/oem/modem-config/%P\n')
 
 PRODUCT_COPY_FILES += $(MODEM_CONFIG)
 
