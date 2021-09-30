@@ -598,6 +598,10 @@ vendor/lib64/unnhal-acc-hvx.so
 # NFC
 system/etc/permissions/com.nxp.nfc.xml
 system/framework/com.nxp.nfc.jar
+system/framework/oat/arm64/com.nxp.nfc.vdex
+system/framework/oat/arm64/com.nxp.nfc.odex
+system/framework/oat/arm/com.nxp.nfc.vdex
+system/framework/oat/arm/com.nxp.nfc.odex
 system/lib64/libnfc-nci.so
 system/lib64/libnfc_nci_jni.so
 system/lib/libnfc-nci.so
@@ -736,10 +740,10 @@ vendor/lib64/libqti-util.so
 # Power-off alarm
 system_ext/framework/vendor.qti.hardware.alarm-V1.0-java.jar
 system_ext/lib64/vendor.qti.hardware.alarm@1.0.so
-system/system_ext/framework/oat/arm64/vendor.qti.hardware.alarm-V1.0-java.odex
-system/system_ext/framework/oat/arm64/vendor.qti.hardware.alarm-V1.0-java.vdex
-system/system_ext/framework/oat/arm/vendor.qti.hardware.alarm-V1.0-java.odex
-system/system_ext/framework/oat/arm/vendor.qti.hardware.alarm-V1.0-java.vdex
+system_ext/framework/oat/arm64/vendor.qti.hardware.alarm-V1.0-java.odex
+system_ext/framework/oat/arm64/vendor.qti.hardware.alarm-V1.0-java.vdex
+system_ext/framework/oat/arm/vendor.qti.hardware.alarm-V1.0-java.odex
+system_ext/framework/oat/arm/vendor.qti.hardware.alarm-V1.0-java.vdex
 
 # QCC
 vendor/lib/vendor.qti.hardware.qccvndhal@1.0.so
@@ -793,6 +797,10 @@ system_ext/etc/permissions/qti_permissions.xml
 system_ext/etc/permissions/telephony_system-ext_privapp-permissions-qti.xml
 system_ext/etc/permissions/telephonyservice.xml
 system_ext/framework/qcrilhook.jar
+system_ext/framework/oat/arm64/qcrilhook.odex
+system_ext/framework/oat/arm64/qcrilhook.vdex
+system_ext/framework/oat/arm/qcrilhook.odex
+system_ext/framework/oat/arm/qcrilhook.vdex
 -system_ext/priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
 -vendor/app/IWlanService/IWlanService.apk
 vendor/bin/hw/qcrild
