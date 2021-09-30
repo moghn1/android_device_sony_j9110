@@ -1122,7 +1122,7 @@ vendor/camera/snapshot.dat
 vendor/camera/SODA_HMN_BN0010-0001
 vendor/camera/streaming.dat
 
-vendor/camera/CHI08BS1/CHI08BS1/bokeh_comp.dat
+vendor/camera/CHI08BS1/bokeh_comp.dat
 vendor/camera/CHI08BS1/color_ctrl.dat
 vendor/camera/CHI08BS1/dataflow.dat
 vendor/camera/CHI08BS1/exposure_ctrl.dat
